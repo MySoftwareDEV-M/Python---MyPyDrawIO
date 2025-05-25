@@ -1,4 +1,6 @@
-import Framework.Data               as Data
+import uuid
+
+import MyFramework.Data             as Data
 import MyPyDrawIO.Attributes        as Attributes
 import MyPyDrawIO.Library           as Library
 import MyPyDrawIO.ElementDefinition as ElementDefinition
@@ -11,6 +13,7 @@ class Edge(Attributes.Attributes):
     ###############################################################################################
     # class variables
     __geometry  : Geometry.Geometry
+    __object    = None
 
     ###############################################################################################
     # private functions
@@ -21,15 +24,26 @@ class Edge(Attributes.Attributes):
         """
         self.setProtectedAttributes(["@id", "@edge", "@parent"])
         if(type(content) == ElementDefinition.ElementDefinition):
-            definition = content["definition"]
-            self.__geometry = Geometry.Geometry(definition["mxGeometry"])
-            dict.__init__(self, Data.copyArguments(definition))
+            definition = content["object definition"]
+            self.__geometry = Geometry.Geometry(definition["mxCell"]["mxGeometry"])
+            self.__object = Data.copyArguments(definition)
+            self.__object["@id"] = str(uuid.uuid4())
+            dict.__init__(self, Data.copyArguments(definition["mxCell"]))
             self["@parent"] = "1"
             self["@source"] = sourceID
             self["@target"] = targetID
+            
         else:
-            dict.__init__(self, Data.copyArguments(content))
-            self.__geometry = Geometry.Geometry(content["mxGeometry"])
+            try:
+                self.__geometry = Geometry.Geometry(content["mxCell"]["mxGeometry"])
+                del content["mxCell"]["mxGeometry"]
+                self.__object = Data.copyArguments(content)
+                dict.__init__(self, Data.copyArguments(content["mxCell"]))
+                
+            except:
+                self.__geometry = Geometry.Geometry(content["mxGeometry"])
+                del content["mxGeometry"]
+                dict.__init__(self, Data.copyArguments(content))
 
     ###############################################################################################
     # Public functions
@@ -38,8 +52,21 @@ class Edge(Attributes.Attributes):
         """
         Gibt den Inhalt dieser edge zurück, welcher nach der Überführung in XML zum Speichern in der Datei genutzt werden kann.
         """
-        content = Data.copyArguments(self)
-        content["mxGeometry"] = self.__geometry.content()
+        content = None
+        if(self.__object):
+            content = Data.copyArguments(self.__object)
+            content["mxCell"] = Data.copyArguments(self)
+            
+            value = Attributes.Attributes.getValue(content["mxCell"], "@value")
+            if(value):
+                content["@label"] = value
+                del content["mxCell"]["@value"]
+            
+            content["mxCell"]["mxGeometry"] = self.__geometry.content()
+        else:
+            content = Data.copyArguments(self)
+            content["mxGeometry"] = self.__geometry.content()
+            
         return content
 
     #----------------------------------------------------------------------------------------------
@@ -49,5 +76,25 @@ class Edge(Attributes.Attributes):
         """        
         return self.__geometry
 
+    def id(self) -> str:
+        """
+        Gibt das Attribut id des Vertex zurück.
+        <br>
+        <br>Technischer Hintergrund:
+        <br>Je nachdem, ob ein Vertex als Object oder als einfacher Vertex realisiert ist, wird dessen ID 
+        entweder im Object oder halt im einfachen Vertex hinterlegt. Diese Funktion führt die entsprechende
+        Prüfung durch und gibt die id zurück.
+        """
+        if (self.isObject()):
+            return self.__object["@id"]
+        return self["@id"]
+    
+    def isObject(self) -> bool:
+        """
+        Gibt zurück, ob dieser Vertex ein Object ist.
+        <br> true -> Vertex ist ein Object
+        <br> false -> Vertex ist kein Object, sondern ein einfacher Vertex.
+        """
+        return (self.__object != None)
 ###################################################################################################
 # Public global functions / Helper functions

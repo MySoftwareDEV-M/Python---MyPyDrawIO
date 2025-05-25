@@ -1,7 +1,7 @@
 import xmltodict
 
-import Framework.Informations   as Infos
-import Framework.Data           as Data
+import MyFramework.Informations   as Infos
+import MyFramework.Data           as Data
     
 class ElementDefinition(dict):
     """

@@ -1,8 +1,8 @@
 import functools
 import json
 
-import Framework.Informations       as Infos
-import Framework.Data               as Data
+import MyFramework.Informations     as Infos
+import MyFramework.Data             as Data
 import MyPyDrawIO.Attributes        as Attributes
 
 class Geometry(Attributes.Attributes):

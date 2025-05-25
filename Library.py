@@ -1,7 +1,7 @@
 import json
 import xmltodict
 
-import Framework.Informations       as Infos
+import MyFramework.Informations     as Infos
 import MyPyDrawIO.ElementDefinition as ElementDefinition
     
 class Library(dict):
