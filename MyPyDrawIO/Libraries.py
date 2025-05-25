@@ -1,6 +1,6 @@
 import os
 
-import Framework.Informations   as Infos
+import MyFramework.Informations as Infos
 import MyPyDrawIO.Library       as Library
     
 class Libraries:

@@ -1,7 +1,7 @@
 import uuid
 
-import Framework.Informations       as Infos
-import Framework.Data               as Data
+import MyFramework.Informations     as Infos
+import MyFramework.Data             as Data
 import MyPyDrawIO.Attributes        as Attributes
 import MyPyDrawIO.Geometry          as Geometry
 import MyPyDrawIO.Library           as Library
@@ -26,24 +26,17 @@ class Vertex(Attributes.Attributes):
         """
         self.setProtectedAttributes(["@id", "@parent", "@vertex"])
         if(type(content) == ElementDefinition.ElementDefinition):
-            Infos.announceDebug("Vertex als ElementDefinition")
             definition = content["object definition"]
-
-            # Data.printNice(definition, highlighting="OBJECT DEFINITION")
             self.__geometry = Geometry.Geometry(definition["mxCell"]["mxGeometry"])
             self.__object = Data.copyArguments(definition)
             dict.__init__(self, Data.copyArguments(definition["mxCell"]))
             self.__object["@id"] = str(uuid.uuid4())
             self["children"] = list[Vertex]()
-            
-            # Data.printNice(self, highlighting="VERTEX SELF")
-                
+                            
             if(parent != None):
                 parent.addChild(self)
                 self["@parent"] = parent["@id"]
         else:
-            Infos.announceDebug("Vertex NICHT als ElementDefinition")
-            Data.printNice(content, highlighting="Vertex init()")
             try:
                 self.__geometry = Geometry.Geometry(content["mxCell"]["mxGeometry"])
                 del content["mxCell"]["mxGeometry"]
@@ -54,7 +47,6 @@ class Vertex(Attributes.Attributes):
             except:
                 self.__geometry = Geometry.Geometry(content["mxGeometry"])
                 del content["mxGeometry"]
-                # dict.__init__(self, content)
                 dict.__init__(self, Data.copyArguments(content))
                 self["children"] = list[Vertex]()
 

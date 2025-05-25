@@ -1,6 +1,6 @@
 import unittest
 
-import Framework.Informations   as Infos
+import MyFramework.Informations as Infos
 
 import MyPyDrawIO.File          as File
 import MyPyDrawIO.Page          as Page

@@ -1,7 +1,7 @@
 import os
 import xmltodict
 
-import Framework.Informations       as Infos
+import MyFramework.Informations     as Infos
 
 import MyPyDrawIO.Page              as Page
 import MyPyDrawIO.Attributes        as Attributes

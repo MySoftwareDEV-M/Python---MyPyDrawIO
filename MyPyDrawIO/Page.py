@@ -1,9 +1,7 @@
-import functools
-import json
 import uuid
 
-import Framework.Informations       as Infos
-import Framework.Data               as Data
+import MyFramework.Informations     as Infos
+import MyFramework.Data             as Data
 import MyPyDrawIO.Attributes        as Attributes
 import MyPyDrawIO.Edge              as Edge
 import MyPyDrawIO.Library           as Library
@@ -48,7 +46,10 @@ class Page(Attributes.Attributes):
                 mxCells.extend(vertex.content())
 
         for edge in self.__edges:
-            mxCells.append(edge.content())
+            if(edge.isObject()):
+                objects.append(edge.content())
+            else:
+                mxCells.append(edge.content())
 
         root = {
             "mxCell": mxCells,
@@ -98,22 +99,17 @@ class Page(Attributes.Attributes):
         self.__edges    = []
         allVertices     = []
         childVertices   = []
-
-        # Data.printNice(mxGraphModel, highlighting="mxGraphModel")
         
         elements = mxGraphModel["root"]["mxCell"]
         
         try:
             objects = mxGraphModel["root"]["object"]
-            print(type(objects))
             if type(objects) == dict:
                 elements.append(objects)
             elif type(objects) == list:
                 elements.extend(objects)
         except:
             pass
-                
-        # Data.printNice(elements,highlighting="ELEMENTS")
         
         for cell in elements:
             try:
@@ -148,7 +144,6 @@ class Page(Attributes.Attributes):
         Hilfsfunktion, um aus der übergebenen Liste einen Eintrag mit der übergebenen ID zurückzugeben. (Dies wird genutzt, um den Parent zu bestimmen.)
         """
         for vertex in allVertices:
-            # if( vertex["@id"] == parentID):
             if( vertex.id() == parentID):
                 return vertex
         return None
