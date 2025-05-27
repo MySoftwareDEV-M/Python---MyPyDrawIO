@@ -1,0 +1,3 @@
+[submodule "MyFramework"]
+	path = MyFramework
+	url = https://github.com/MySoftwareDEV-M/Python---MyFramework.git
