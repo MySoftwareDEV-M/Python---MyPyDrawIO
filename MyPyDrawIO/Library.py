@@ -77,7 +77,7 @@ class Library(dict):
         for elementDefinition in content:
             element = ElementDefinition.ElementDefinition()
             name = element.parse(elementDefinition)
-            if(name == ""):
+            if(name == None):
                 Infos.announceWarning("An element within the library \"" + self["name"] + "\" could not be parsed")
             else:
                 try:

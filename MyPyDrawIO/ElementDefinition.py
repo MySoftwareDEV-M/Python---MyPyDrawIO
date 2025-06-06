@@ -16,9 +16,11 @@ class ElementDefinition(dict):
     ###############################################################################################
     # public functions  of Element        
     #----------------------------------------------------------------------------------------------
-    def parse(self, definition : str) -> bool:
+    def parse(self, definition : str) -> str:
         """
         Der übergebene String wird geparst. In diesem String sollte die Definition eines DrawIO Elements enthalten sein.
+
+        Returns the name of the element definition or None if element could not be parsed.
         """        
         # 1. We only need the "xml entry"
         definition = definition["xml"]
@@ -36,7 +38,12 @@ class ElementDefinition(dict):
 
         # 4. If we made it this far, we can retrieve the relevant information
         # ... get the name
-        name = object_definition["object"]["@name"]
+        name = ""
+        try:
+            name = object_definition["object"]["@name"]
+        except:
+            Infos.announceWarning("No object definition.")
+            return None
         self["name"] = name
         
         # .. check if it is a vertex ...

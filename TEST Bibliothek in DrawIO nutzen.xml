@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mxfile>
+	<diagram name="Seite - 1" id="f976d79d-0419-4ac0-88a3-e3edac44d2b6">
+		<mxGraphModel dx="780" dy="542" grid="1" gridSize="10" guides="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+			<root>
+				<mxCell id="0"></mxCell>
+				<mxCell id="1" parent="0"></mxCell>
+				<object label="RECT 1" name="RECTANGLE" id="db604220-e200-41cd-a61f-88f9d002078f">
+					<mxCell style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+						<mxGeometry width="120" height="60" as="geometry"></mxGeometry>
+					</mxCell>
+				</object>
+				<object label="RECT 2" name="RECTANGLE" id="c91a3d3d-b6ad-4d48-a4e8-ba456377ca8b">
+					<mxCell style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+						<mxGeometry width="120" height="60" as="geometry"></mxGeometry>
+					</mxCell>
+				</object>
+				<object label="VERBINDER&lt;br&gt;PFEIL" name="VERBINDER PFEIL" id="b2f6c195-8ffc-4bc1-9e74-603df534e0ce">
+					<mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="db604220-e200-41cd-a61f-88f9d002078f" target="c91a3d3d-b6ad-4d48-a4e8-ba456377ca8b">
+						<mxGeometry relative="1" as="geometry">
+							<mxPoint as="sourcePoint"></mxPoint>
+							<mxPoint x="160" as="targetPoint"></mxPoint>
+						</mxGeometry>
+					</mxCell>
+				</object>
+			</root>
+		</mxGraphModel>
+	</diagram>
+</mxfile>
