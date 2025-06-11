@@ -1,4 +1,4 @@
 [submodule "MyFramework"]
 	path = MyFramework
 	url = https://github.com/MySoftwareDEV-M/Python---MyFramework.git
-	branch = v1.0
+	branch = v1.1
